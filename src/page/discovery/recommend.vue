@@ -2,11 +2,13 @@
   <div class="recommend">
     <Title>推荐歌单</Title>
     <div class="list-wrap">
-      <PlayListCard v-for="item in list"
-                    :key="item.id"
-                    :name="item.name"
-                    :img="item.picUrl"
-                    :desc="item.copywriter" />
+      <PlayListCard
+        v-for="item in list"
+        :key="item.id"
+        :name="item.name"
+        :img="item.picUrl"
+        :desc="item.copywriter"
+      />
     </div>
   </div>
 </template>
@@ -15,22 +17,22 @@
 import Title from "@/base/title";
 import PlayListCard from "@/components/play-list-card";
 export default {
-  async create(){
+  async create() {
     const { result } = await this.$request("/personalized?limit=10");
     this.list = result;
   },
   data() {
     return {
-      list:[]
-    }
+      list: [],
+    };
   },
-  components: { Title, PlayListCard }
-}
+  components: { Title, PlayListCard },
+};
 </script>
 
 <style lang="scss" scoped>
-  .list-wrap {
-    margin: 0 -4px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.list-wrap {
+  margin: 0 -4px;
+  display: flex;
+  flex-wrap: wrap;
+}

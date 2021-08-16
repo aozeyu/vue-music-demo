@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <layout />
+    <MiniPlayer />
   </div>
 </template>
 
 <script>
 import Layout from "@/layout/index.vue";
+import MiniPlayer from '@/components/mini-player'
 export default {
   name: "App",
   components: {
     Layout,
+    MiniPlayer
   },
 };
 </script>

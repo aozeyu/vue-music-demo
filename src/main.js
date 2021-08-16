@@ -3,10 +3,12 @@ import App from './App.vue'
 import router from './router'
 import '@/style/index.scss'
 import {Loading} from 'element-ui'
-import store from './store'
+import store from './store/index'
 import initAxios from './utils/axios'
+import global from './utils/global'
 Vue.use(Loading)
 Vue.use(initAxios)
+Vue.use(global)
 Vue.config.productionTip = false
 
 

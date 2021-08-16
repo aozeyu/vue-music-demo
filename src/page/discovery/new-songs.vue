@@ -10,11 +10,12 @@
         <StripedList v-if="list.length" :source="list">
           <NewSongCard
             v-for="(item, index) in list"
-            :order="getSongOrder"
+            :order="getSongOrder(lastIndex, index)"
             :key="item.id"
-            :img="item.song.album.blurPicUrl"
+            v-bind="nomalizeSong(item)"
             :name="item.name"
             :artists="item.song.artists"
+            @click.native="onClickSong(item)"
           />
         </StripedList>
       </div>
@@ -24,47 +25,74 @@
 
 <script>
 import Title from "@/base/title";
-import StripedList from "@/base/striped-list";
 import NewSongCard from "@/components/new-song-card";
+import { createSong } from "@/utils/song";
+import { mapActions } from "vuex";
 const songsLimit = 10;
 export default {
   async create() {
-    const { result } = await this.$requset(
-      `/personalized/newsong?limit=${songsLimit}`
-    );
-    this.list = result
+    const { result } = await this.$requset(`/personalized/newsong`);
+    this.list = result;
   },
   data() {
     return {
       chunkLimit: Math.ceil(songsLimit / 2),
-      list:[]
-    }
+      list: [],
+    };
   },
-  methods:{
-    getSongOrder(listIndex,index){
-      return listIndex * this.chunkLimit + index + 1
-    }
+  methods: {
+    getSongOrder(listIndex, index) {
+      return listIndex * this.chunkLimit + index + 1;
+    },
+    nomalizeSong(song) {
+      const {
+        id,
+        name,
+        song: {
+          artists,
+          album: { blurPicUrl },
+          duration,
+        },
+      } = song;
+      return createSong({
+        id,
+        name,
+        img: blurPicUrl,
+        artists,
+        duration,
+      });
+    },
+    onClickSong(song) {
+      const nomalizedSong = this.nomalizeSong(song);
+      this.getCurrentSong(nomalizedSong);
+    },
+    ...mapActions(["getCurrentSong"]), // 帮您commit mutation函数
   },
-  computed:{
-    thunkedList(){
+  computed: {
+    thunkedList() {
       return [
-        this.list.slice(0,this.chunkLimit),
-        this.list.slice(this.chunkLimit,this.list.length)
-      ]
-    }
+        this.list.slice(0, this.chunkLimit),
+        this.list.slice(this.chunkLimit, this.list.length),
+      ];
+    },
   },
-  components:{
+  components: {
     Title,
-    StripedList,
-    NewSongCard
-  }
+    NewSongCard,
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-  .list-wrap {
-    display: flex;
-    .list {
-      flex: 1;
+.list-wrap {
+  display: flex;
+  .list {
+    flex: 1;
+  }
+  .song-card {
+    cursor: pointer;
+    &:hover {
+      background: $light-bgcolor;
     }
   }
+}

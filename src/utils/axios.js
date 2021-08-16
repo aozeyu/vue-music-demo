@@ -3,10 +3,10 @@ import {Loading} from 'element-ui'
 
 let loading
 let loadingCount = 0
-
+export let request
 export default {
   install(Vue) {
-    const request = axios.create({
+     request = axios.create({
       baseURL:'/api'
     })
     request.interceptors.request.use((config) => {
@@ -30,6 +30,6 @@ export default {
         console.log("error",response);
       }
     })
-    Vue.prototype.$request = request
+    Vue.prototype.$request = request // 注册到Vue全局上
   }
 }
