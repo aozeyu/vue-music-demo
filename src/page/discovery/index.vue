@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Banner from './banner.vue'
+import Banner from "./banner.vue";
 import Recommend from "./recommend";
 import NewSongs from "./new-songs";
 export default {
@@ -19,7 +19,7 @@ export default {
   components: {
     Recommend,
     NewSongs,
-    Banner
+    Banner,
   },
 };
 </script>

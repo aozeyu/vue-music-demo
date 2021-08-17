@@ -8,27 +8,23 @@
 <script>
 export default {
   data() {
-    return {
-      
-    }
+    return {};
   },
-  components:{
-
-  }
-}
+  components: {},
+};
 </script>
 
 <style lang="scss" scoped>
-.user{
+.user {
   display: flex;
   align-items: center;
   padding: 16px;
   padding-bottom: 0;
   margin-bottom: 12px;
-  .user-icon{
+  .user-icon {
     font-size: 24px;
   }
-  .user-name{
+  .user-name {
     margin-left: 8px;
     font-size: $font-size-lg;
   }

@@ -1,20 +1,20 @@
 <template>
   <div class="header">
     <div class="logo-wrap">
-      <img :src="logo" alt="" class="logo">
+      <img :src="logo" alt="" class="logo" />
       <span>云音乐</span>
     </div>
   </div>
 </template>
 
 <script>
-import logo from '@/assets/logo.png'
+import logo from "@/assets/logo.png";
 export default {
   data() {
     return {};
   },
-  created(){
-    this.logo = logo
+  created() {
+    this.logo = logo;
   },
   components: {},
 };
@@ -27,12 +27,12 @@ export default {
   height: $header-height;
   background-color: $body-bgcolor;
   padding: 16px;
-  .logo-wrap{
+  .logo-wrap {
     display: flex;
     align-items: center;
     font-size: $font-size-title;
     color: $white;
-    .logo{
+    .logo {
       width: 30px;
       height: 30px;
       margin-right: 8px;

@@ -1,11 +1,15 @@
 <template>
-  <i class="iconfont" :class="`icon-${type}`" :style="{fontSize: `${size}px`}" />
+  <i
+    class="iconfont"
+    :class="`icon-${type}`"
+    :style="{ fontSize: `${size}px` }"
+  />
 </template>
 
 <script>
 export default {
-  props:['type','size']
-}
+  props: ["type", "size"],
+};
 </script>
 
 <style lang="scss" scoped>

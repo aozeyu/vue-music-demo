@@ -66,7 +66,7 @@ export default {
     },
     onClickSong(song) {
       const nomalizedSong = this.nomalizeSong(song);
-      this.startSong(nomalizedSong) // 相当于this.$store.dispatch('startSong')
+      this.startSong(nomalizedSong); // 相当于this.$store.dispatch('startSong')
     },
     ...mapActions(["startSong"]), // 帮您commit mutation函数
   },

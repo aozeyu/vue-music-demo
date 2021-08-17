@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ["order", "name", "img", "artistsText"]
+  props: ["order", "name", "img", "artistsText"],
 };
 </script>
 
@@ -52,7 +52,7 @@ export default {
       transform: translate(-50%, -50%);
       background: rgba(255, 255, 255, 0.5);
       .play-icon {
-        color: $theme-color
+        color: $theme-color;
       }
     }
   }
