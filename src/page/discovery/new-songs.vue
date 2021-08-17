@@ -9,8 +9,9 @@
       >
         <StripedList v-if="list.length" :source="list">
           <NewSongCard
+            class="song-card"
             v-for="(item, index) in list"
-            :order="getSongOrder(lastIndex, index)"
+            :order="getSongOrder(listIndex, index)"
             :key="item.id"
             v-bind="nomalizeSong(item)"
             :name="item.name"
@@ -28,10 +29,11 @@ import Title from "@/base/title";
 import NewSongCard from "@/components/new-song-card";
 import { createSong } from "@/utils/song";
 import { mapActions } from "vuex";
+import { getNewSongs } from "@/api/discovery";
 const songsLimit = 10;
 export default {
   async create() {
-    const { result } = await this.$requset(`/personalized/newsong`);
+    const { result } = await getNewSongs();
     this.list = result;
   },
   data() {
@@ -64,9 +66,9 @@ export default {
     },
     onClickSong(song) {
       const nomalizedSong = this.nomalizeSong(song);
-      this.getCurrentSong(nomalizedSong);
+      this.startSong(nomalizedSong) // 相当于this.$store.dispatch('startSong')
     },
-    ...mapActions(["getCurrentSong"]), // 帮您commit mutation函数
+    ...mapActions(["startSong"]), // 帮您commit mutation函数
   },
   computed: {
     thunkedList() {
