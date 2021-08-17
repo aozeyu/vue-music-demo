@@ -7,6 +7,7 @@ export function createSong(song) {
     artists,
     duration,
     artistsText: genArtistis(artists),
+    durationSecond: duration / 1000,
   };
 }
 

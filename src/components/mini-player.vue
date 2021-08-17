@@ -1,8 +1,8 @@
 <template>
   <div class="mini-player">
-    <div v-if="currentSong.id" class="song">
+    <div v-if="hasCurrentSong" class="song">
       <div class="img-wrap">
-        <img :src="currentSong.img" alt="" />
+        <img :src="currentSong.img" alt />
       </div>
       <div class="content">
         <div class="top">
@@ -25,8 +25,8 @@
       </div>
     </div>
     <div></div>
-    <div class="progress-bar-wrap">
-      <ProgressBar />
+    <div class="progress-bar-wrap" v-if="hasCurrentSong">
+      <ProgressBar :precent="playedPercent" @precentChange="onProgressChange" />
     </div>
     <audio
       ref="audio"
@@ -74,8 +74,12 @@ export default {
     },
     end() {
       this.audio.currentTime = 0;
+      this.audio.play();
     },
-    ...mapMutations(["setPlayingState"]),
+    onProgressChange(present) {
+      this.audio.currentTime = this.currentSong.durationSecond * present;
+    },
+    ...mapMutations(["setPlayingState"]), // 帮你commit mutation
   },
   watch: {
     currentSong(newSong, oldSong) {
@@ -101,6 +105,9 @@ export default {
     },
   },
   computed: {
+    hasCurrentSong() {
+      return !!this.currentSong.id; // 转成真的布尔值;
+    },
     playIcon() {
       return this.playing ? "pause" : "play";
     },
@@ -174,13 +181,9 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center();
     .play-icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include flex-center();
       width: 45px;
       height: 45px;
       border-radius: 50%;

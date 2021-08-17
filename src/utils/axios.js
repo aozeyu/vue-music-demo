@@ -3,7 +3,7 @@ import {Loading} from 'element-ui'
 
 let loading
 let loadingCount = 0
-export let request
+export let request // requset是一个axios实例
 export default {
   install(Vue) {
      request = axios.create({
@@ -12,7 +12,8 @@ export default {
     request.interceptors.request.use((config) => {
       loading ||(loading = Loading.service({
         target: '#page-content',
-        text:'载入中'
+        text:'载入中',
+        background: 'transparent'
       })
       )
       loadingCount++

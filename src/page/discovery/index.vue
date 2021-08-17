@@ -1,6 +1,7 @@
 <template>
   <div class="discovery">
     <div class="discovery-content">
+      <Banner />
       <Recommend />
       <NewSongs />
     </div>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+import Banner from './banner.vue'
 import Recommend from "./recommend";
 import NewSongs from "./new-songs";
 export default {
@@ -17,6 +19,7 @@ export default {
   components: {
     Recommend,
     NewSongs,
+    Banner
   },
 };
 </script>
