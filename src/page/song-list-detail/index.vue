@@ -17,7 +17,7 @@ export default {
     // 根据id获取列表
     const { playlist } = await getListDetail({ id: listId });
     this.playlist = playlist;
-    this.songlist = await this.getSongDetail(playlist);
+    this.getSonglist(playlist);
   },
   data() {
     return {
@@ -40,8 +40,6 @@ export default {
         })
       );
       this.songs = songs;
-      // eslint-disable-next-line no-console
-      console.log("song ", songs);
     },
   },
   components: {
