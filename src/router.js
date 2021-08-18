@@ -1,19 +1,25 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Discovery from '@/page/discovery'
+import Vue from "vue";
+import Router from "vue-router";
+const Discovery = () => import("@/page/discovery");
+const SongListDetail = () => import("@/page/song-list-detail");
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  routes:[
+  routes: [
     {
-      path:'/',
-      redirect:'/discovery'
+      path: "/",
+      redirect: "/discovery",
     },
     {
-      path:'/discovery',
-      name:'discovery',
-      component:Discovery
-    }
-  ]
-})
+      path: "/discovery",
+      name: "discovery",
+      component: Discovery,
+    },
+    {
+      path: "/song-list-detail/:listId",
+      name: "song-list-detail",
+      component: SongListDetail,
+    },
+  ],
+});

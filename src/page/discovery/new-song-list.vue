@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" v-if="list.length">
     <Title>推荐歌单</Title>
     <div class="list-wrap">
       <PlayListCard
@@ -8,6 +8,7 @@
         :name="item.name"
         :img="item.picUrl"
         :desc="item.copywriter"
+        @click.native="onClickCard(item.id)"
       />
     </div>
   </div>
@@ -16,9 +17,10 @@
 <script>
 import Title from "@/base/title";
 import PlayListCard from "@/components/play-list-card";
+import { getPersonalized } from "@/api/discovery"
 export default {
   async create() {
-    const { result } = await this.$request("/personalized?limit=10");
+    const { result } = await getPersonalized({ limit: 10 })
     this.list = result;
   },
   data() {
@@ -27,6 +29,11 @@ export default {
     };
   },
   components: { Title, PlayListCard },
+  methods:{
+    onClickCard(id){
+      this.$router.push(`/song-list-detail/${id}`)
+    }
+  }
 };
 </script>
 

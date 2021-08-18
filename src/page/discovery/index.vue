@@ -2,7 +2,7 @@
   <div class="discovery">
     <div class="discovery-content">
       <Banner />
-      <Recommend />
+      <NewSongList />
       <NewSongs />
     </div>
   </div>
@@ -10,14 +10,14 @@
 
 <script>
 import Banner from "./banner.vue";
-import Recommend from "./recommend";
+import NewSongList from "./new-song-list"
 import NewSongs from "./new-songs";
 export default {
   data() {
     return {};
   },
   components: {
-    Recommend,
+    NewSongList,
     NewSongs,
     Banner,
   },

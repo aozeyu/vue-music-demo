@@ -84,11 +84,18 @@ video {
 }
 
 body {
-    line-height:1;
+    line-height:1.2;
 }
 
 :focus {
 	outline: 1;
+  q:after{
+    content: '';
+    content: none
+  }
+  select{
+    vertical-align: middle;
+  }
 }
 
 article,
@@ -169,3 +176,8 @@ hr {
 input, select {
     vertical-align:middle;
 } 
+
+img[src=''],
+img:not([src]){
+  opacity:0
+}
