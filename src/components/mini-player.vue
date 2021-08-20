@@ -1,6 +1,6 @@
 <template>
   <div class="mini-player">
-    <div v-if="hasCurrentSong" class="song">
+    <div v-if="hasCurrentSong">
       <div class="img-wrap">
         <img :src="currentSong.img" alt />
       </div>
@@ -13,18 +13,33 @@
       </div>
       <div class="time">
         <span class="played-time">{{ formatTime(currentTime) }}</span>
-        <span class="split"></span>
+        <span class="split">/</span>
         <span class="total-time">{{
           formatTime(currentSong.duration / 1000)
         }}</span>
       </div>
     </div>
     <div class="control">
+      <Icon class="icon" type="prev" :size="24" @click.native="prev"/>
       <div @click="togglePlaying" class="play-icon">
-        <Icon :type="playIcon" :size="20"></Icon>
+        <Icon :type="playIcon" :size="24"/>
       </div>
+      <Icon
+        class="icon"
+        type="next"
+        :size="24"
+        @click.native="next"
+      />
     </div>
-    <div></div>
+    <div class="mode">
+      <Icon
+        class="icon"
+        type="playlist"
+        :size="18"
+        @click.native="togglePlaylistShow"
+      />
+      <volume @volumeChange="onVolumeChange" />
+    </div>
     <div class="progress-bar-wrap" v-if="hasCurrentSong">
       <ProgressBar :precent="playedPercent" @precentChange="onProgressChange" />
     </div>
@@ -39,8 +54,9 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState ,mapGetters,mapActions } from "vuex";
 import ProgressBar from "@/base/progress-bar";
+import volume from '@/base/volume'
 import { formatTime } from "@/utils/common";
 export default {
   created() {
@@ -63,7 +79,9 @@ export default {
       this.songReady = true;
     },
     play() {
-      this.audio.play();
+      if (this.songReady) {
+        this.audio.play();
+      }
     },
     pause() {
       this.audio.pause();
@@ -72,14 +90,30 @@ export default {
       const time = e.target.currentTime;
       this.currentTime = time;
     },
+    prev(){
+      if (this.songReady) {
+        this.startSong(this.nextSong)
+      }
+    },
+    next(){
+      if (this.someReady) {
+        this.startSong(this.nextSong)
+      }
+    },
     end() {
-      this.audio.currentTime = 0;
-      this.audio.play();
+      this.next()
     },
     onProgressChange(present) {
       this.audio.currentTime = this.currentSong.durationSecond * present;
     },
-    ...mapMutations(["setPlayingState"]), // 帮你commit mutation
+    onVolumeChange(percent) {
+      this.audio.volume = percent
+    },
+    togglePlaylistShow() {
+      this.setPlaylistShow(!this.isPlaylistShow)
+    },
+    ...mapMutations(["setPlayingState","setPlaylistShow"]), // 帮你commit mutation
+    ...mapActions(["startSong"])
   },
   watch: {
     currentSong(newSong, oldSong) {
@@ -114,10 +148,12 @@ export default {
     audio() {
       return this.$refs.audio;
     },
-    ...mapState(["currentSong", "playing"]),
+    ...mapState(["currentSong", "playing","isPlaylistShow"]),
+    ...mapGetters(["prevSong","nextSong"])
   },
   components: {
     ProgressBar,
+    volume
   },
 };
 </script>
@@ -126,7 +162,7 @@ export default {
 .mini-player {
   position: relative;
   position: fixed;
-  z-index: 1;
+  z-index: $mini-player-z-index;
   bottom: 0;
   left: 0;
   right: 0;
@@ -134,6 +170,7 @@ export default {
   justify-content: space-between;
   height: $mini-player-height;
   padding: 8px;
+  padding-right: 24px;
   background: $body-bgcolor;
   .song {
     display: flex;
@@ -186,16 +223,28 @@ export default {
       @include flex-center();
       width: 45px;
       height: 45px;
+      margin: 0 16px;
       border-radius: 50%;
       background: $theme-color;
       cursor: pointer;
     }
+    .icon {
+      color: $theme-color;
+    }
+  }
+  .mode {
+    display: flex;
+    align-items: center;
   }
   .progress-bar-wrap {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: $mini-player-height - 14px;
+    top: -14px;
   }
+}
+.icon {
+  color: $font-color;
+  cursor: pointer;
 }
 </style>

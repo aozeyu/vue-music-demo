@@ -15,3 +15,53 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: $menu-bgcolor;
 }
+
+::selection  {
+  background-color:$theme-color;
+  color: white;
+}
+
+// 滚动条
+// table
+.el-table th,
+.el-table td {
+  padding: 4px!important;
+  font-size: $font-size-sm!important;
+}
+.el-table::before {
+  height: 0!important;
+}
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: $light-bgcolor !important;
+}
+// 斑马纹颜色
+.el-table--striped .el-table__body tr.el-table__row--striped td {
+  background: $light-bgcolor !important;
+}
+// 空数据
+.el-table__empty-block {
+  background: $body-bgcolor;
+  color: $font-color;
+}
+.el-table__header-wrapper th {
+  color: $font-color;
+}
+
+@mixin el-table-theme($color) {
+  .el-table td,
+  .el-table th {
+  background-color: $color !important;
+  border-bottom: none !important;
+  }
+}
+
+@include el-table-theme($body-bgcolor);
+
+.playlist {
+  @include el-table-theme($playlist-bgcolor);
+}
+
+// carosel 
+.el-carousel--horizontal {
+  overflow: hidden;
+} 

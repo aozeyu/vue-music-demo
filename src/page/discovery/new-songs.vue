@@ -28,7 +28,7 @@
 import Title from "@/base/title";
 import NewSongCard from "@/components/new-song-card";
 import { createSong } from "@/utils/song";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import { getNewSongs } from "@/api/discovery";
 const songsLimit = 10;
 export default {
@@ -66,8 +66,10 @@ export default {
     },
     onClickSong(song) {
       const nomalizedSong = this.nomalizeSong(song);
-      this.startSong(nomalizedSong); // 相当于this.$store.dispatch('startSong')
+      this.startSong(nomalizedSong); // 相当于this.$store.dispatch('startSong',nomalizedSong)
+      this.setPlaylist(this.nomalizedSongs);
     },
+    ...mapMutations(["setPlaylist"]),
     ...mapActions(["startSong"]), // 帮您commit mutation函数
   },
   computed: {
@@ -77,6 +79,9 @@ export default {
         this.list.slice(this.chunkLimit, this.list.length),
       ];
     },
+    nomalizedSongs() {
+      return this.list.map((song) => this.nomalizeSong(song));
+    },//返回一个数组
   },
   components: {
     Title,
