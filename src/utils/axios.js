@@ -7,7 +7,7 @@ export let request // requset是一个axios实例
 export default {
   install(Vue) {
      request = axios.create({
-      baseURL:'/api'
+      baseURL:'/netease-api'
     })
     request.interceptors.request.use((config) => {
       loading ||(loading = Loading.service({
