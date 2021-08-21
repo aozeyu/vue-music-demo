@@ -27,9 +27,6 @@ export default {
       }
       if (response.status === 200) {
         return response.data
-      }else{
-        // eslint-disable-next-line no-console
-        console.log("error",response);
       }
     })
     Vue.prototype.$request = request // 注册到Vue全局上
